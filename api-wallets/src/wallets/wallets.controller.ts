@@ -25,9 +25,9 @@ export class WalletsController {
     return wallets;
   }
 
-  @Get(':id')
-  getWallet(@Param('id') walletId: string) {
-    return this.walletsService.getOneWallet(walletId);
+  @Get(':address')
+  getWallet(@Param('address') walletAdd: string) {
+    return this.walletsService.getOneWallet(walletAdd);
   }
 
   @Delete(':id')
