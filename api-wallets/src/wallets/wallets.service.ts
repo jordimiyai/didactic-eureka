@@ -29,7 +29,7 @@ export class WalletsService {
     return result.address;
   }
 
-  async getWallets(sorted: boolean) {
+  async getWallets(sorted: string) {
     const allWallets = await this.walletModel.find().exec();
     if (!allWallets) {
       throw new NotFoundException('No wallets in DB');
@@ -42,7 +42,7 @@ export class WalletsService {
         return -1;
       } else return 1;
     };
-    if (sorted === true) {
+    if (sorted === "true") {
       allWallets.sort(compare);
     }
     return allWallets.map((w) => ({

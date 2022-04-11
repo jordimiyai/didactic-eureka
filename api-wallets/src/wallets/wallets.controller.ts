@@ -21,7 +21,7 @@ export class WalletsController {
   }
 
   @Get()
-  async getAllWallets(@Query('sorted') sorted:boolean) {
+  async getAllWallets(@Query('sorted') sorted:string) {
     const wallets = await this.walletsService.getWallets(sorted);
     return wallets;
   }

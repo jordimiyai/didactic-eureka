@@ -13,16 +13,16 @@ export default function Home() {
   useEffect(() => {
     dispatch(getRates());
   }, []);
-  const [checked, setChecked] = useState(false);
+  const [updated, setupdated] = useState(false);
 
   const allWallets = useSelector((state) => state.allWallets);
   useEffect(() => {
-    dispatch(getWallets(checked));
-  }, [dispatch, checked]);
+    dispatch(getWallets(updated));
+  }, [dispatch, updated]);
 
 
   const updateDisplay = (value) => {
-    setChecked(value);
+    setupdated(value);
   };
 
   return (

@@ -1,23 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
 export default function SortBy(props) {
   const { updateDisplay } = props;
   const dispatch = useDispatch();
+  const [favFirst, setfavFirst] = useState(false);
 
-  function handleCheck(e) {
+  function handleClickFav(e) {
     e.preventDefault();
-    console.log(e.target.checked);
-    if (e.target.checked === true) {
-      updateDisplay(true);
-    } else dispatch(false);
+    setfavFirst(true)
+    updateDisplay(true);
+  }
+  function handleClickDefault(e) {
+    e.preventDefault();
+    setfavFirst(false)
+    updateDisplay(false);
   }
   return (
     <div>
-      <label>
-        <input type="checkbox" onChange={(e) => handleCheck(e)} /> Favorites
-        First
-      </label>
+      
+      <button onClick={(e) => handleClickFav(e)} value={favFirst}>
+        Favorites First
+      </button>
+      <button onClick={(e) => handleClickDefault(e)} value={favFirst}>
+        Show by default
+      </button>
+      
     </div>
   );
 }
