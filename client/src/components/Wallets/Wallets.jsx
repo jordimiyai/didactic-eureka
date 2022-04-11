@@ -5,7 +5,7 @@ export default function Wallets(props) {
   const { allWallets } = props;
   return (
     <div>
-      {allWallets.length ? (
+      {allWallets ? (
         allWallets.map((wal) => {
           return (
             <Wallet
