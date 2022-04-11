@@ -57,14 +57,14 @@ export class WalletsService {
     }
     let walletIsOld = this.isOld(wallet.firstTransaction);
 
-    const balanceWey = await this.getBalance(wallet.address);
+    const balanceWei = await this.getBalance(wallet.address);
     //the api returns the balance in wei so i make the convert or i can use a web3 library
     // const balanceEther = balanceWey / 1000000000000000000
     return {
       address: wallet.address,
       id: wallet.id,
       isOld: walletIsOld,
-      balanceWey: balanceWey,
+      balanceWei: balanceWei,
       isFavorite: wallet.isFavorite,
     };
   }
