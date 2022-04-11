@@ -1,16 +1,16 @@
-import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
+import { faArrowAltCircleUp } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 export default function Balance(props) {
   const { walletInfo, toggleShow } = props;
   const exchangeRates = useSelector((state) => state.exchangeRates);
 
-  const [convertedBalance, setconvertedBalance] = useState(walletInfo.balance)
-  function handleRates(e){
-    e.preventDefault()
-    setconvertedBalance(e.target.value * walletInfo.balance)
+  const [convertedBalance, setconvertedBalance] = useState(walletInfo.balance);
+  function handleRates(e) {
+    e.preventDefault();
+    setconvertedBalance(e.target.value * walletInfo.balance);
   }
-
 
   return (
     <div>
@@ -40,7 +40,10 @@ export default function Balance(props) {
           <p>{convertedBalance}</p>
         </div>
       </div>
-      <button onClick={(e) => toggleShow(e)}>Ocultar</button>
+      <button onClick={(e) => toggleShow(e)}>
+        {" "}
+        <FontAwesomeIcon icon={faArrowAltCircleUp} />
+      </button>
     </div>
   );
 }
