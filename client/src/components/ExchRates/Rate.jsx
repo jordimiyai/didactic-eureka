@@ -20,7 +20,6 @@ export default function Rate(props) {
   }
   function saveRate(e) {
     e.preventDefault();
-    console.log(id,'osdsda')
     axios
       .patch(`${RATES_URL}/${id}`, displayRate)
       .then(() => dispatch(getRates()))

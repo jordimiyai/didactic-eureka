@@ -3,16 +3,15 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { WALLETS_URL } from "../../store/constants";
 import Favorite from "../Favorite/favorite";
+import Balance from "./Balance";
 
 export default function Wallet(props) {
   const { id, isFav, address } = props;
-  const exchangeRates = useSelector((state) => state.exchangeRates);
   const [walletInfo, setWalletInfo] = useState({
     balance: 0,
     isOld: false,
     show: false
   });
-
   function toggleShow(e) {
     e.preventDefault();
     if (!walletInfo.show) {
@@ -32,11 +31,7 @@ export default function Wallet(props) {
     }
     
   }
-  const [convertedBalance, setconvertedBalance] = useState(walletInfo.balance)
-  function handleRates(e){
-    e.preventDefault()
-    setconvertedBalance(e.target.value * walletInfo.balance)
-  }
+  
   return (
     <div>
       {" "}
@@ -50,34 +45,10 @@ export default function Wallet(props) {
       >
         <p style={{ margin: "10px" }}>Address: </p>
         <p style={{ margin: "10px" }}>{address}</p>
-        <Favorite isFav={isFav} />
+        <Favorite isFav={isFav} id={id}/>
       </div>
       {walletInfo.show ? (
-        <div>
-          {walletInfo.isOld ? <p>"Wallet is Old" </p>: ""}
-          <div style={{display:'flex', flexDirection:'row', justifyContent:'center' }}>
-          <div>
-          <p>Ether: </p>
-          <>{walletInfo.balance}</>
-          </div>
-          <div>
-          <select onChange={e=> handleRates(e)}>
-            <option value={1}>Exchange Rates </option>
-          {exchangeRates.map((rate) => {
-            return (
-              <option key={rate.id} value={rate.rate}>
-                {rate.rate + " " + rate.code}
-              </option>
-            );
-          })}
-          </select>
-          <p>{convertedBalance}</p>
-
-          </div>
-          </div>
-          <button onClick={(e) => toggleShow(e)}>Ocultar</button>
-
-        </div>
+       <Balance walletInfo={walletInfo} toggleShow={toggleShow}/>
       ) : (
         <button onClick={(e) => toggleShow(e)}>Ver Mas</button>
       )}
