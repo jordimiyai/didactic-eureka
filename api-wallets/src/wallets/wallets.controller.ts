@@ -18,16 +18,16 @@ export class WalletsController {
     const created = await this.walletsService.createWallet(walletAddress);
     return { address: created };
   }
-  
+
   @Get()
   async getAllWallets() {
     const wallets = await this.walletsService.getWallets();
     return wallets;
   }
 
-  @Get(':address')
-  getWallet(@Param('address') walletAdd: string) {
-    return this.walletsService.getOneWallet(walletAdd);
+  @Get(':id')
+  getWallet(@Param('id') walletId: string) {
+    return this.walletsService.getOneWallet(walletId);
   }
 
   @Delete(':id')
@@ -37,11 +37,11 @@ export class WalletsController {
   }
 
   @Patch(':id')
-  async updateWallet(
+  async updateFavorite(
     @Param('id') walletId: string,
-    @Body('isFavorite') favStatus: boolean,
+    @Body('isFavorite') isFav: boolean,
   ) {
-    await this.walletsService.updateWallet(walletId, favStatus);
+    await this.walletsService.updateFav(walletId, isFav);
     return null;
   }
 }
