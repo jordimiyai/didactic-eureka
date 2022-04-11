@@ -22,7 +22,7 @@ export default function Home() {
 
   return (
     <div>
-              home
+<h1>Digital Wallet Dashboard</h1>
 
       <NavBar rates={exchangeRates}/>
       <AddWallet allWallets={allWallets}/>

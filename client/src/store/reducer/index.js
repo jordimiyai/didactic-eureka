@@ -1,4 +1,4 @@
-import { GET_RATES, GET_WALLETS, POST_WALLET } from "../constants";
+import { GET_RATES, GET_WALLETS } from "../constants";
 
 const initialState = {
   exchangeRates: [],
