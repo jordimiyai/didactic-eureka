@@ -3,6 +3,7 @@ import Wallet from "../Wallet/Wallet";
 
 export default function Wallets(props) {
   const { allWallets } = props;
+  console.log(allWallets,'enwall')
   return (
     <div>
       {allWallets ? (

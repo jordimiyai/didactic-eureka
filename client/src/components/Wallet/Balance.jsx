@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { WALLETS_URL } from "../../store/constants";
 export default function Balance(props) {
   const { walletInfo, toggleShow } = props;
   const exchangeRates = useSelector((state) => state.exchangeRates);

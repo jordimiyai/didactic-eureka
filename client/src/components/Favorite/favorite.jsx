@@ -6,36 +6,35 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { WALLETS_URL } from "../../store/constants";
-import { getWallets } from "../../store/actions";
 
 export default function Favorite(props) {
   const { isFav, id } = props;
-
   const [favStatus, setFavStatus] = useState({ favStatus: isFav });
+
   function handleClickAdd(e) {
-    setFavStatus(true);
     axios
-      .patch(`${WALLETS_URL}/${id}`, favStatus)
-      .then((res) => console.log(res))
+      .patch(`${WALLETS_URL}/${id}`, {favStatus: true })
+      .then((res) => console.log(res, 'add'))
       .catch((e) => {
         alert(e);
-        setFavStatus({ favStatus: false });
       });
+      setFavStatus({favStatus: true });
+
   }
 
   function handleClickRemove(e) {
-    setFavStatus(false);
+
     axios
-      .patch(`${WALLETS_URL}/${id}`, favStatus)
+      .patch(`${WALLETS_URL}/${id}`, { favStatus: false })
       .then((res) => console.log(res))
       .catch((e) => {
         alert(e);
-        setFavStatus({ favStatus: true });
       });
+      setFavStatus({ favStatus: false });
   }
   return (
     <div>
-      {favStatus ? (
+      {favStatus.favStatus ? (
         <button onClick={handleClickRemove}>
           <FontAwesomeIcon icon={faHeartCircleMinus} />
         </button>

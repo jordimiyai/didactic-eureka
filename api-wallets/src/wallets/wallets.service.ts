@@ -29,10 +29,21 @@ export class WalletsService {
     return result.address;
   }
 
-  async getWallets() {
+  async getWallets(sorted: boolean) {
     const allWallets = await this.walletModel.find().exec();
     if (!allWallets) {
       throw new NotFoundException('No wallets in DB');
+    }
+    const compare = (a, b) => {
+      if (a.isFavorite && b.isFavorite) {
+        return 0;
+      }
+      if (a.isFavorite) {
+        return -1;
+      } else return 1;
+    };
+    if (sorted === true) {
+      allWallets.sort(compare);
     }
     return allWallets.map((w) => ({
       address: w.address,
@@ -76,11 +87,11 @@ export class WalletsService {
     return data.result;
   }
 
-  async updateFav(walletId: string, isFav: boolean) {
+  async updateFav(walletId: string, favStatus: boolean) {
     const updatedwallet = await this.findWallet(walletId);
     const result = await this.walletModel.updateOne(
       { _id: walletId },
-      { isFavorite: isFav },
+      { isFavorite: favStatus },
     );
   }
 
