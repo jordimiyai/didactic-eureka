@@ -1,7 +1,8 @@
-import { GET_RATES } from "../constants";
+import { GET_RATES, GET_WALLETS, POST_WALLET } from "../constants";
 
 const initialState = {
   exchangeRates: [],
+  allWallets: [],
 };
 
 export default function reducer(state = initialState, action) {
@@ -11,6 +12,12 @@ export default function reducer(state = initialState, action) {
         ...state,
         exchangeRates: action.payload,
       };
+    case GET_WALLETS:
+      return {
+        ...state,
+        allWallets: action.payload,
+      };
+
     default:
       return state;
   }

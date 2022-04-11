@@ -3,7 +3,8 @@ import NavBar from "../NavBar/NavBar";
 import axios from "axios";
 import Wallets from "../Wallets/Wallets";
 import { useDispatch, useSelector } from "react-redux";
-import { getRates } from "../../store/actions";
+import { getRates, getWallets } from "../../store/actions";
+import AddWallet from "../AddWallet/AddWallet";
 
 export default function Home() {
   const dispatch = useDispatch()
@@ -12,11 +13,9 @@ export default function Home() {
     dispatch(getRates())
   },[])
 
-  const [allWallets, setAllWallets] = useState(null);
+  const allWallets = useSelector((state) => state.allWallets);
   useEffect(() => {
-    axios.get(`http://localhost:3001/wallets/`).then(res=> {
-        setAllWallets(res.data);
-    })
+   dispatch(getWallets())
   }, []);
 
   console.log(allWallets)
@@ -26,6 +25,7 @@ export default function Home() {
               home
 
       <NavBar rates={exchangeRates}/>
+      <AddWallet allWallets={allWallets}/>
       <Wallets allWallets={allWallets}/>
     </div>
   );
