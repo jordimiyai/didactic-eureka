@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Wallet } from './wallets.model';
 import { HttpService } from '@nestjs/axios';
-import { firstValueFrom, timestamp } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
@@ -41,41 +41,48 @@ export class WalletsService {
       firstTransaction: w.firstTransaction,
     }));
   }
-  private isOld(timeStamp: number){
-    const firstTr = new Date(timeStamp*1000)
+
+  private isOld(timeStamp: number) {
+    const firstTr = new Date(timeStamp * 1000);
     const today = new Date();
-    today.setFullYear(today.getFullYear()-1);
-    const walletIsOld = firstTr <= today ? true : false
-    return walletIsOld
+    today.setFullYear(today.getFullYear() - 1);
+    const walletIsOld = firstTr <= today ? true : false;
+    return walletIsOld;
   }
 
-  async getOneWallet(address: string) {
-    const wallet = await this.findWallet(address);
+  async getOneWallet(id: string) {
+    const wallet = await this.findWallet(id);
     if (!wallet) {
       throw new NotFoundException('Wallet not Found');
     }
-    let walletIsOld = this.isOld(wallet.firstTransaction)
+    let walletIsOld = this.isOld(wallet.firstTransaction);
 
-    const balanceWey = await this.getBalance(address)
-    //the api returns the balance in wei so i make the convert or i can use a web3 library 
+    const balanceWey = await this.getBalance(wallet.address);
+    //the api returns the balance in wei so i make the convert or i can use a web3 library
     // const balanceEther = balanceWey / 1000000000000000000
-    return {address: wallet.address, id: wallet.id, isOld: walletIsOld, balanceWey: balanceWey };
+    return {
+      address: wallet.address,
+      id: wallet.id,
+      isOld: walletIsOld,
+      balanceWey: balanceWey,
+      isFavorite: wallet.isFavorite,
+    };
   }
-  private async getBalance(address:string) {
+
+  private async getBalance(address: string) {
     const apiKey = this.configService.get('API_KEY');
     const url = `https://api.etherscan.io/api?module=account&action=balance&address=${address}&tag=latest&apikey=${apiKey}`;
     const { data } = await firstValueFrom(this.httpService.get(url));
-    return data.result
+    return data.result;
   }
-  async updateWallet(walletId: string, favStatus: boolean) {
-    const updatedwallet = await this.findWallet(walletId);
-    updatedwallet.isFavorite = !favStatus;
 
-    //updatedwallet.save(); HERE I HAVE AN ISSUE
-    // await this.walletModel
-    //   .where({ _id: walletId })
-    //   .update({ isFavorite: !favStatus });
-    //   console.log()
+  async updateFav(walletId: string, isFav: boolean) {
+    const updatedwallet = await this.findWallet(walletId);
+    console.log(walletId, isFav);
+    const result = await this.walletModel.updateOne(
+      { _id: walletId },
+      { isFavorite: isFav },
+    );
   }
 
   async deleteWallet(walletId: string) {
@@ -83,23 +90,19 @@ export class WalletsService {
     console.log(result);
   }
 
-  private async findWallet(address: string): Promise<Wallet> {
-    const wallet = await this.walletModel.findOne({ address: address }).exec();
+  private async findWallet(id: string): Promise<Wallet> {
+    const wallet = await this.walletModel.findOne({ _id: id }).exec();
     if (!wallet) {
       throw new NotFoundException('Wallet not found');
     }
-    return {
-      address: wallet.address,
-      id: wallet.id,
-      isFavorite: wallet.isFavorite,
-      firstTransaction: wallet.firstTransaction,
-    };
+    return wallet;
   }
+
   private async firstWalletTransaction(address: string) {
     const apiKey = this.configService.get('API_KEY');
     const url = `https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&page=1&offset=1&apikey=${apiKey}`;
     const { data } = await firstValueFrom(this.httpService.get(url));
-    if (data.status ==='0') {
+    if (data.status === '0') {
       throw new NotFoundException(data.message);
     }
     return data.result[0].timeStamp;
