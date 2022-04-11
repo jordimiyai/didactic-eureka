@@ -5,13 +5,20 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ExRateModule } from './exchangeRates/eRates.module';
 import { WalletsModule } from './wallets/wallets.module';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     WalletsModule,
     ExRateModule,
-    MongooseModule.forRoot('mongodb://localhost:27017/walletsDB'),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (config: ConfigService) => ({
+        uri: config.get<string>('DB_HOST'), // Loaded from .ENV
+      }),
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
