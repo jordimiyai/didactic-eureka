@@ -3,7 +3,10 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { getRates } from "../../store/actions";
 import { RATES_URL } from "../../store/constants";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faEdit,
+} from "@fortawesome/free-solid-svg-icons";
 export default function Rate(props) {
   const { id, code, rate } = props;
   const dispatch = useDispatch()
@@ -35,23 +38,25 @@ export default function Rate(props) {
         alignItems: "center",
       }}
     >
-      <div style={{ margin: "3px 20px" }}>
-        <h5>{code}</h5>
+      <div style={{ margin: "3px 10px 1px" , display:'flex', flexDirection:'row', alignItems:'center'}}>
+        <h6 style={{ margin: "3px 10px 1px" }}>{code}</h6>
         {edit ? (
           <div>
             <form className="Save" onSubmit={saveRate}>
-              <input
+              <input 
                 type="text"
                 onChange={handleChange}
                 value={displayRate.newRate}
+                style={{width: "3em"}}
               />
               <input type="submit" value="save" />
             </form>
           </div>
         ) : (
-          <div>
-            <button onClick={editRate}>edit</button>
-            <h6>{displayRate.newRate}</h6>
+          <div style={{display:'flex', flexDirection:'row', margin: "3px 20px" }}>
+                        <h6>{displayRate.newRate}</h6>
+
+            <button onClick={editRate} style={{border:'0', background: 'transparent' }}><FontAwesomeIcon icon={faEdit} /></button>
           </div>
         )}
       </div>

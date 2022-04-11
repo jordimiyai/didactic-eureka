@@ -30,9 +30,10 @@ export default function Home() {
       <h1>Digital Wallet Dashboard</h1>
 
       <NavBar rates={exchangeRates} />
+      <div style={{display:"flex", flexDirection:'row', justifyContent:'center', padding: "1em", alignContent:'center'}}>
       <AddWallet allWallets={allWallets} />        
       <SortBy updateDisplay={updateDisplay}/>
-
+      </div>
 
       <Wallets allWallets={allWallets} />
     </div>

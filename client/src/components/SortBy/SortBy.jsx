@@ -17,12 +17,16 @@ export default function SortBy(props) {
     updateDisplay(false);
   }
   return (
-    <div>
+    <div style={{margin:' 0em 1em'}}>
       
-      <button onClick={(e) => handleClickFav(e)} value={favFirst}>
+      <button onClick={(e) => handleClickFav(e)} value={favFirst} style={{
+              fontsize: "14px",
+              padding: "5px"}}>
         Favorites First
       </button>
-      <button onClick={(e) => handleClickDefault(e)} value={favFirst}>
+      <button onClick={(e) => handleClickDefault(e)} value={favFirst}  style={{
+              fontsize: "14px",
+              padding: "5px", margin:'0em 1em'}}>
         Show by default
       </button>
       
