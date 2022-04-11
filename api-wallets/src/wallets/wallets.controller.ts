@@ -6,6 +6,7 @@ import {
   Param,
   Delete,
   Patch,
+  Query,
 } from '@nestjs/common';
 import { WalletsService } from './wallets.service';
 
@@ -20,8 +21,8 @@ export class WalletsController {
   }
 
   @Get()
-  async getAllWallets() {
-    const wallets = await this.walletsService.getWallets();
+  async getAllWallets(@Query('sorted') sorted:string) {
+    const wallets = await this.walletsService.getWallets(sorted);
     return wallets;
   }
 
@@ -38,10 +39,10 @@ export class WalletsController {
 
   @Patch(':id')
   async updateFavorite(
+    @Body('favStatus') favStatus: boolean,
     @Param('id') walletId: string,
-    @Body('isFavorite') isFav: boolean,
   ) {
-    await this.walletsService.updateFav(walletId, isFav);
+    await this.walletsService.updateFav(walletId, favStatus);
     return null;
   }
 }

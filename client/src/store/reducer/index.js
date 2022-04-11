@@ -13,6 +13,7 @@ export default function reducer(state = initialState, action) {
         exchangeRates: action.payload,
       };
     case GET_WALLETS:
+      console.log(action.payload)
       return {
         ...state,
         allWallets: action.payload,

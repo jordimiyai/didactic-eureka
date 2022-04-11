@@ -10,7 +10,6 @@ export default function AddWallet(props) {
   const [address, setAddress] = useState("");
   function walletExist(allWallets, newWall) {
     const isPosted = allWallets.filter((wallet) => wallet.address === newWall);
-    console.log(isPosted);
     if (isPosted.length > 0) {
       return true;
     }

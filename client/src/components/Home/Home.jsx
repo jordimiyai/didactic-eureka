@@ -5,6 +5,7 @@ import Wallets from "../Wallets/Wallets";
 import { useDispatch, useSelector } from "react-redux";
 import { getRates, getWallets } from "../../store/actions";
 import AddWallet from "../AddWallet/AddWallet";
+import SortBy from "../SortBy/SortBy";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -12,20 +13,27 @@ export default function Home() {
   useEffect(() => {
     dispatch(getRates());
   }, []);
+  const [updated, setupdated] = useState(false);
 
   const allWallets = useSelector((state) => state.allWallets);
   useEffect(() => {
-    dispatch(getWallets());
-  }, []);
+    dispatch(getWallets(updated));
+  }, [dispatch, updated]);
 
-  console.log(allWallets);
+
+  const updateDisplay = (value) => {
+    setupdated(value);
+  };
 
   return (
     <div>
       <h1>Digital Wallet Dashboard</h1>
 
       <NavBar rates={exchangeRates} />
-      <AddWallet allWallets={allWallets} />
+      <AddWallet allWallets={allWallets} />        
+      <SortBy updateDisplay={updateDisplay}/>
+
+
       <Wallets allWallets={allWallets} />
     </div>
   );

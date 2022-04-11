@@ -6,7 +6,9 @@ export default function NavBar(props) {
   return (
     <div>
       <p>Add your Ethereum wallets and check their value in </p>
-      <ExchRates rates={rates} />
+      <div>
+        <ExchRates rates={rates} />
+      </div>
     </div>
   );
 }
