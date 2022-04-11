@@ -10,6 +10,7 @@ export default function Wallets(props) {
           return (
             <Wallet
               key={wal.id}
+              id={wal.id}
               address={wal.address}
               isFav={wal.isFavorite}
             />

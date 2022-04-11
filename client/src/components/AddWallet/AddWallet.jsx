@@ -18,7 +18,7 @@ export default function AddWallet(props) {
   }
   useEffect(() => {
     dispatch(getWallets());
-  }, []);
+  }, [dispatch]);
 
   function onSubmit(e) {
     e.preventDefault();
@@ -42,7 +42,7 @@ export default function AddWallet(props) {
     setAddress(e.target.value);
   }
   return (
-    <form className="Search" onSubmit={onSubmit}>
+    <form className="Add" onSubmit={onSubmit}>
       <input
         type="text"
         onChange={onInputChange}
