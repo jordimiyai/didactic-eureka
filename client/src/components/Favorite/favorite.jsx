@@ -35,11 +35,11 @@ export default function Favorite(props) {
   return (
     <div>
       {favStatus.favStatus ? (
-        <button onClick={handleClickRemove}>
+        <button onClick={handleClickRemove} style={{color:'red',border:'0', background: 'transparent'  }}>
           <FontAwesomeIcon icon={faHeartCircleMinus} />
         </button>
       ) : (
-        <button onClick={handleClickAdd}>
+        <button onClick={handleClickAdd} style={{border:'0', background: 'transparent' }}>
           <FontAwesomeIcon icon={faHeartCirclePlus} />
         </button>
       )}

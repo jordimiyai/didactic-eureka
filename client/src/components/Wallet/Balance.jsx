@@ -1,6 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
-import { faArrowAltCircleUp } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowAltCircleUp,
+  faWarning,
+} from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 export default function Balance(props) {
   const { walletInfo, toggleShow } = props;
@@ -14,21 +17,65 @@ export default function Balance(props) {
 
   return (
     <div>
-      {walletInfo.isOld ? <p>"Wallet is Old" </p> : ""}
+      {walletInfo.isOld ? (
+        <p
+          style={{
+            backgroundColor: "pink",
+            color: "red",
+            margin: "1em 15em",
+            borderRadius: "2px",
+          }}
+        >
+          <FontAwesomeIcon icon={faWarning} />
+          Wallet is Old
+        </p>
+      ) : (
+        ""
+      )}
       <div
         style={{
           display: "flex",
           flexDirection: "row",
           justifyContent: "center",
+          margin: "1em 10em",
         }}
       >
-        <div>
-          <p>Ether: </p>
-          <>{walletInfo.balance}</>
+        <div
+          style={{
+            justifyContent: "center",
+            margin: "0em 1em",
+            backgroundColor: "#f1f1f1",
+            borderRadius: "2px",
+            padding: "1em",
+            width: "15em",
+            height: "7em",
+            alignItems: 'flex-start',
+
+          }}
+        >
+          <p>Ether</p>
+          <h3>{walletInfo.balance}</h3>
         </div>
-        <div>
-          <select onChange={(e) => handleRates(e)}>
-            <option value={1}>Exchange Rates </option>
+        <div
+          style={{
+            justifyContent: "center",
+            backgroundColor: "#f1f1f1",
+            borderRadius: "2px",
+            padding: "1em",
+            width: "15em",
+            height: "7em",
+            alignItems: 'flex-start',
+          }}
+        >
+          <select
+            onChange={(e) => handleRates(e)}
+            style={{
+              fontsize: "14px",
+              height: "30px",
+              padding: "5px",
+              width: "10em",
+            }}
+          >
             {exchangeRates.map((rate) => {
               return (
                 <option key={rate.id} value={rate.rate}>
@@ -37,10 +84,10 @@ export default function Balance(props) {
               );
             })}
           </select>
-          <p>{convertedBalance}</p>
+          <h3>{convertedBalance}</h3>
         </div>
       </div>
-      <button onClick={(e) => toggleShow(e)}>
+      <button onClick={(e) => toggleShow(e)} style={{border:'0', background: 'transparent' }}>
         {" "}
         <FontAwesomeIcon icon={faArrowAltCircleUp} />
       </button>

@@ -45,14 +45,13 @@ export default function Wallet(props) {
           alignItems: "center",
         }}
       >
-        <p style={{ margin: "10px" }}>Address: </p>
         <p style={{ margin: "10px" }}>{address}</p>
         <Favorite isFav={isFav} id={id} />
       </div>
       {walletInfo.show ? (
         <Balance walletInfo={walletInfo} toggleShow={toggleShow} />
       ) : (
-        <button onClick={(e) => toggleShow(e)}>
+        <button onClick={(e) => toggleShow(e)} style={{border:'0', background: 'transparent' }}>
           <FontAwesomeIcon icon={faArrowAltCircleDown} />
         </button>
       )}
