@@ -15,7 +15,6 @@ export default function ExchRates(props) {
       {rates.map((r) => {
         return (
           <Rate id={r._id} code={r.code} rate={r.rate} key={r._id}/>
-  
         );
       })}
     </div>

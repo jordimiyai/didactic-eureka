@@ -1,4 +1,5 @@
-# didactic-eureka
+# Digital Wallet Dashboard
+
 Requirements
 La aplicación tiene los siguientes requisitos:
 1. Agregue direcciones de billetera y muéstrelas.

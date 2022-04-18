@@ -42,13 +42,21 @@ export default function AddWallet(props) {
   }
   return (
     <form className="Add" onSubmit={onSubmit}>
-      <input
+      <input style={{
+              fontsize: "14px",
+              height: "15px",
+              padding: "5px",
+              width: "10em",
+            }}
         type="text"
         onChange={onInputChange}
         placeholder="Paste wallet address"
         value={address}
       />
-      <input type="submit" value="Search" />
+      <input   type="submit" value="Add" style={{
+              fontsize: "14px",
+              padding: "5px",
+            }}/>
     </form>
   );
 }
