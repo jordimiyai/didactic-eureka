@@ -88,7 +88,7 @@ export class WalletsService {
   }
 
   async updateFav(walletId: string, favStatus: boolean) {
-    const updatedwallet = await this.findWallet(walletId);
+    //const updatedwallet = await this.findWallet(walletId);
     const result = await this.walletModel.updateOne(
       { _id: walletId },
       { isFavorite: favStatus },

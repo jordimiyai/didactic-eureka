@@ -16,7 +16,7 @@ import { ConfigService } from '@nestjs/config';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (config: ConfigService) => ({
-        uri: config.get<string>('DB_HOST'), // Loaded from .ENV
+        uri: config.get<string>('DB_HOST'), 
       }),
     }),
   ],

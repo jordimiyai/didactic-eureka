@@ -1,9 +1,7 @@
-FROM node:16
-
-WORKDIR /eimi/src/app
+FROM node:16.14
+WORKDIR /api-wallets
 COPY package*.json ./
 RUN npm install
 COPY . .
-RUN npm run build
-EXPOSE 8080
-CMD [ "node", "dist/main" ]
+EXPOSE 3001
+CMD [ "node", "dist/main.js" ]

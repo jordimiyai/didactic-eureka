@@ -5,7 +5,7 @@ import {
   faHeartCirclePlus,
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import { WALLETS_URL } from "../../store/constants";
+import { API_URL } from "../../store/constants";
 
 export default function Favorite(props) {
   const { isFav, id } = props;
@@ -13,7 +13,7 @@ export default function Favorite(props) {
 
   function handleClickAdd(e) {
     axios
-      .patch(`${WALLETS_URL}/${id}`, {favStatus: true })
+      .patch(`${API_URL}/wallets/${id}`, {favStatus: true })
       .then((res) => console.log(res, 'add'))
       .catch((e) => {
         alert(e);
@@ -25,7 +25,7 @@ export default function Favorite(props) {
   function handleClickRemove(e) {
 
     axios
-      .patch(`${WALLETS_URL}/${id}`, { favStatus: false })
+      .patch(`${API_URL}/wallets/${id}`, { favStatus: false })
       .then((res) => console.log(res))
       .catch((e) => {
         alert(e);

@@ -13,7 +13,6 @@ export class ExRateService {
     private httpService: HttpService,
     @InjectModel('ExRate') private readonly exRateModel: Model<ExRate>,
   ) {}
-  //funcion aca  
 
   private async findExchangeRates(code: string){
     const url = `https://api.coingate.com/v2/rates/trader/buy/eth/${code}`;
@@ -38,10 +37,12 @@ export class ExRateService {
   async getExchangeRates(){
     let allRates = await this.exRateModel.find().exec();
     if (!allRates.length) {
-        const dollar = await this.createExRate('USD', 'Dollar', 'US$')
-        const euro = await this.createExRate('EUR', 'Euro', '€')
-        allRates.push(euro)
-        allRates.push(dollar)
+      // this allows to make easier modifications in the future
+        const CURRENCY_DATA = [{code:'USD', name:'Dollar', symbol:'US$'}, {code:'EUR', name:'Euro', symbol:'€'}]
+        CURRENCY_DATA.forEach(async (currency) => {
+          const rate = await this.createExRate(currency.code, currency.name, currency.symbol)
+          allRates.push(rate)
+        });
     }
 
     return allRates
