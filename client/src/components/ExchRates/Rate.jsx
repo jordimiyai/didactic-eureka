@@ -56,7 +56,7 @@ export default function Rate(props) {
           <div style={{display:'flex', flexDirection:'row', margin: "3px 20px" }}>
                         <h6>{displayRate.newRate}</h6>
 
-            <button onClick={editRate} style={{border:'0', background: 'transparent' }}><FontAwesomeIcon icon={faEdit} /></button>
+            <button onClick={editRate} className='btn btn-primary'><FontAwesomeIcon icon={faEdit} /></button>
           </div>
         )}
       </div>

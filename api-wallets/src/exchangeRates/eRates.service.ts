@@ -14,44 +14,53 @@ export class ExRateService {
     @InjectModel('ExRate') private readonly exRateModel: Model<ExRate>,
   ) {}
 
-  private async findExchangeRates(code: string){
+  private async findExchangeRates(code: string) {
     const url = `https://api.coingate.com/v2/rates/trader/buy/eth/${code}`;
-    const {data} = await firstValueFrom(this.httpService.get(url));
+    const { data } = await firstValueFrom(this.httpService.get(url));
     if (!data) {
-      throw new NotFoundException("no exchange rate found");
+      throw new NotFoundException('no exchange rate found');
     }
-    return data
+    return data;
   }
-  private async createExRate(code:string, currency: string, symbol:string) {
-      const rate = await this.findExchangeRates(code)
+  private async createExRate(code: string, currency: string, symbol: string) {
+    const rate = await this.findExchangeRates(code);
     const newExRate = new this.exRateModel({
       code,
       currency,
-      symbol, 
-      rate
+      symbol,
+      rate,
     });
     const result = await newExRate.save();
     return result;
   }
 
-  async getExchangeRates(){
+  async getExchangeRates() {
     let allRates = await this.exRateModel.find().exec();
     if (!allRates.length) {
       // this allows to make easier modifications in the future
-        const CURRENCY_DATA = [{code:'USD', name:'Dollar', symbol:'US$'}, {code:'EUR', name:'Euro', symbol:'€'}]
-        CURRENCY_DATA.forEach(async (currency) => {
-          const rate = await this.createExRate(currency.code, currency.name, currency.symbol)
-          allRates.push(rate)
-        });
+      const CURRENCY_DATA = [
+        { code: 'USD', name: 'Dollar', symbol: 'US$' },
+        { code: 'EUR', name: 'Euro', symbol: '€' },
+      ];
+      const allRates = CURRENCY_DATA.map((currency) => {
+        const rate = this.createExRate(
+          currency.code,
+          currency.name,
+          currency.symbol,
+        );
+        return rate;
+      });
+      Promise.all(allRates).catch((e) => {
+        throw new NotFoundException(e);
+      });
     }
 
-    return allRates
+    return allRates;
   }
-  async updateRate (rateId: string, newRate: number,){
-      const result = await this.exRateModel.updateOne(
-        { _id: rateId},
-        { rate: newRate },
-      );
-    
-    }
+  async updateRate(rateId: string, newRate: number) {
+    const result = await this.exRateModel.updateOne(
+      { _id: rateId },
+      { rate: newRate },
+    );
+  }
 }

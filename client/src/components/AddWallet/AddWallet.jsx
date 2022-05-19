@@ -42,22 +42,14 @@ export default function AddWallet(props) {
     setAddress(e.target.value);
   }
   return (
-    <form className="Add" onSubmit={onSubmit}>
-      <input style={{
-              fontsize: "14px",
-              height: "15px",
-              padding: "5px",
-              width: "10em",
-            }}
+    <form onSubmit={onSubmit}>
+      <input 
         type="text"
         onChange={onInputChange}
         placeholder="Paste wallet address"
         value={address}
       />
-      <input   type="submit" value="Add" style={{
-              fontsize: "14px",
-              padding: "5px",
-            }}/>
+      <input   type="submit" value="Add" className='btn btn-primary'/>
     </form>
   );
 }
