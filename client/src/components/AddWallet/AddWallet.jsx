@@ -2,10 +2,11 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getWallets } from "../../store/actions";
-import { WALLETS_URL } from "../../store/constants";
+import { API_URL } from "../../store/constants";
 
 export default function AddWallet(props) {
   const dispatch = useDispatch();
+
   const { allWallets } = props;
   const [address, setAddress] = useState("");
   function walletExist(allWallets, newWall) {
@@ -25,7 +26,7 @@ export default function AddWallet(props) {
       alert("The wallet is Already posted");
     } else {
       axios
-        .post(WALLETS_URL, { address: address })
+        .post(`${API_URL}/wallets`, { address: address })
         .then((response) => {
           dispatch(getWallets());
         })
@@ -41,22 +42,14 @@ export default function AddWallet(props) {
     setAddress(e.target.value);
   }
   return (
-    <form className="Add" onSubmit={onSubmit}>
-      <input style={{
-              fontsize: "14px",
-              height: "15px",
-              padding: "5px",
-              width: "10em",
-            }}
+    <form onSubmit={onSubmit}>
+      <input 
         type="text"
         onChange={onInputChange}
         placeholder="Paste wallet address"
         value={address}
       />
-      <input   type="submit" value="Add" style={{
-              fontsize: "14px",
-              padding: "5px",
-            }}/>
+      <input   type="submit" value="Add" className='btn btn-primary'/>
     </form>
   );
 }

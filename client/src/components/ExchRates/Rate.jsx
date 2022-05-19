@@ -2,11 +2,11 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { getRates } from "../../store/actions";
-import { RATES_URL } from "../../store/constants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEdit,
 } from "@fortawesome/free-solid-svg-icons";
+import { API_URL } from "../../store/constants";
 export default function Rate(props) {
   const { id, code, rate } = props;
   const dispatch = useDispatch()
@@ -24,7 +24,7 @@ export default function Rate(props) {
   function saveRate(e) {
     e.preventDefault();
     axios
-      .patch(`${RATES_URL}/${id}`, displayRate)
+      .patch(`${API_URL}/eRates/${id}`, displayRate)
       .then(() => dispatch(getRates()))
       .catch((e) => alert(e));
       setEdit(false)
@@ -56,7 +56,7 @@ export default function Rate(props) {
           <div style={{display:'flex', flexDirection:'row', margin: "3px 20px" }}>
                         <h6>{displayRate.newRate}</h6>
 
-            <button onClick={editRate} style={{border:'0', background: 'transparent' }}><FontAwesomeIcon icon={faEdit} /></button>
+            <button onClick={editRate} className='btn btn-primary'><FontAwesomeIcon icon={faEdit} /></button>
           </div>
         )}
       </div>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../NavBar/NavBar";
-import axios from "axios";
 import Wallets from "../Wallets/Wallets";
 import { useDispatch, useSelector } from "react-redux";
 import { getRates, getWallets } from "../../store/actions";
@@ -12,7 +11,7 @@ export default function Home() {
   const exchangeRates = useSelector((state) => state.exchangeRates);
   useEffect(() => {
     dispatch(getRates());
-  }, []);
+  }, [dispatch]);
   const [updated, setupdated] = useState(false);
 
   const allWallets = useSelector((state) => state.allWallets);
@@ -20,7 +19,7 @@ export default function Home() {
     dispatch(getWallets(updated));
   }, [dispatch, updated]);
 
-
+  const img = "https://jordimiyai-thumbnail.s3.amazonaws.com/florabeja_160x120.jpg?AWSAccessKeyId=AKIAYA3LETD3TYGLKEEO&Expires=1651683744&Signature=LMiXx%2FfVSF12YSZkt7EJ4akYIZw%3D"
   const updateDisplay = (value) => {
     setupdated(value);
   };
@@ -34,7 +33,6 @@ export default function Home() {
       <AddWallet allWallets={allWallets} />        
       <SortBy updateDisplay={updateDisplay}/>
       </div>
-
       <Wallets allWallets={allWallets} />
     </div>
   );

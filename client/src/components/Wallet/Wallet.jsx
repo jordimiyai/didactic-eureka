@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import React, { useState } from "react";
-import { WALLETS_URL } from "../../store/constants";
 import Favorite from "../Favorite/favorite";
 import Balance from "./Balance";
 import { faArrowAltCircleDown } from "@fortawesome/free-solid-svg-icons";
+import { API_URL, WEI_TO_ETHEREUM_RATE } from "../../store/constants";
 export default function Wallet(props) {
   const { id, isFav, address } = props;
   const [walletInfo, setWalletInfo] = useState({
@@ -17,11 +17,10 @@ export default function Wallet(props) {
     e.preventDefault();
     if (!walletInfo.show) {
       axios
-        .get(`${WALLETS_URL}/${id}`)
+        .get(`${API_URL}/wallets/${id}`)
         .then((response) => {
           setWalletInfo({
-            //the balance comes in wei must convert first
-            balance: response.data.balanceWei / 1000000000000000000,
+            balance: response.data.balanceWei / WEI_TO_ETHEREUM_RATE,
             isOld: response.data.isOld,
             show: true,
           });

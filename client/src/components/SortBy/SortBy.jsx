@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 
 export default function SortBy(props) {
   const { updateDisplay } = props;
-  const dispatch = useDispatch();
   const [favFirst, setfavFirst] = useState(false);
 
   function handleClickFav(e) {
